@@ -5,14 +5,6 @@ name: update
 # Controls when the action will run. 
 on:
   repository_dispatch:
-    inputs:
-      message:
-        description: 'message'
-        required: true
-      debug:
-        description: 'debug'
-        required: false
-        default: 'false'
     types: update
     schedule:
     - cron:  '*/5 * * * *'
