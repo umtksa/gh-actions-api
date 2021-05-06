@@ -6,6 +6,14 @@ name: update
 on:
   repository_dispatch:
     types: update
+    inputs:
+      message:
+        description: 'message'
+        required: true
+      debug:
+        description: 'debug'
+        required: false
+        default: 'false'
     schedule:
     - cron:  '*/5 * * * *'
     
