@@ -32,6 +32,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo ${{ github.event.client_payload.message }}, world!
+      - name: UpdateJson
+        run: |
+          contents="$(jq '.data = "${{ github.event.client_payload.message }}"' api.json)" && \
+          echo "${contents}" > api.json
+      
+      - name: makeCommit
+        run: |
+          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git config --global user.email "bot@humanthat.codes"
+          git config --global user.name "bot"
+          git pull github ${GITHUB_REF} --ff-only
+          git add .
+          git commit -m "updating API"
+          git push github HEAD:${GITHUB_REF}
+        
