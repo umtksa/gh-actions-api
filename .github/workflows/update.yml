@@ -26,7 +26,7 @@ jobs:
 
       - name: UpdateJson
         run: |
-          echo "${{ github.event.client_payload }}"'
+          echo "${{ github.event.client_payload }}"
           contents="$(jq '.data = "${{ github.event.client_payload.message }}"' api.json)" && \
           echo "${contents}" > api.json
       
